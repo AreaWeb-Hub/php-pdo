@@ -14,46 +14,21 @@ try {
     echo "Error: {$exception->getMessage()}";
 }
 
-// Получение всех записей из таблицы users
+// Создание записей
 
- $sql = "SELECT * FROM users";
- $stmt = $pdo->query($sql);
+$name = 'Михал Палыч';
+$email = 'mihal.palich@areaweb.su';
+$password = 'p@ssword';
 
-// С использованием цикла
-
- while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-     dump($user);
- }
-
-// С использованием fetchAll()
-
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Получение одной записи по ID
-
-// Прямые запросы
-
-$userId = '1;truncate table users;';
-$userId = 1;
-$sql = "SELECT * FROM users WHERE id = $userId";
-$stmt = $pdo->query($sql);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Подготовленный запрос (SELECT)
-
-$userId = 1;
-$sql = "SELECT * FROM users WHERE id = ?";
+$sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$userId]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// С именованными параметрами
-
-$email = 'igor@areaweb.su   ';
-$sql = "SELECT * FROM users WHERE email = :email";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
- 'email' => $email
-]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+try {
+    $stmt->execute([
+        'email' => $email,
+     'name' => $name,
+     'password' => $password
+ ]);
+} catch (PDOException $exception) {
+    echo "Ошибка при добавлении нового пользователя: {$exception->getMessage()}";
+}
