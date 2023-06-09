@@ -4,7 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $host = '127.0.0.1';
 $dbname = 'pdo';
-$username = 'root1';
+$username = 'root';
 $password = 'password';
 $port = 3303;
 
