@@ -14,13 +14,9 @@ try {
     echo "Error: {$exception->getMessage()}";
 }
 
-// Изменение записей
+// Удаление записей
 
 $userId = 4;
-$newPassword = 'VeryStrongP@ssword';
-$sql = "UPDATE users SET password = :password WHERE id = :id";
+$sql = "DELETE FROM users WHERE id = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([
- 'password' => $newPassword,
- 'id' => $userId
-]);
+$stmt->execute([$userId]);
