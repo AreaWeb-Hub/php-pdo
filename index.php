@@ -14,21 +14,13 @@ try {
     echo "Error: {$exception->getMessage()}";
 }
 
-// Создание записей
+// Изменение записей
 
-$name = 'Михал Палыч';
-$email = 'mihal.palich@areaweb.su';
-$password = 'p@ssword';
-
-$sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+$userId = 4;
+$newPassword = 'VeryStrongP@ssword';
+$sql = "UPDATE users SET password = :password WHERE id = :id";
 $stmt = $pdo->prepare($sql);
-
-try {
-    $stmt->execute([
-        'email' => $email,
-     'name' => $name,
-     'password' => $password
- ]);
-} catch (PDOException $exception) {
-    echo "Ошибка при добавлении нового пользователя: {$exception->getMessage()}";
-}
+$stmt->execute([
+ 'password' => $newPassword,
+ 'id' => $userId
+]);
